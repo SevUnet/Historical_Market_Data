@@ -15,11 +15,12 @@ namespace HMData
         public static string user;
         public static string password;
         public static MySqlConnection con;
+        public static string nickname;
 
         public static void ConnectionDB()
         {
             host = "localhost";
-            database = "loto";
+            database = "hmdata";
             user = "root";
             password = "";
 
@@ -34,6 +35,29 @@ namespace HMData
             {
                 MessageBox.Show("Connection failed     " + Ex.ToString());
             }
+        }
+        
+        //Account settings
+        public static void accountsparam()
+        {
+            ConnectionDB();
+
+            try
+            {
+                MySqlCommand commandsql = new MySqlCommand("SELECT * FROM accounts WHERE Login = '" + Auth.username + "' ", con);
+                MySqlDataReader parametres = commandsql.ExecuteReader();
+
+                while (parametres.Read())
+                {
+                    nickname = parametres["Nickname"].ToString();
+                }
+            }
+            catch (Exception IO)
+            {
+
+            }
+
+            con.Close();
         }
 
     }

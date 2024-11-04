@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp6
+﻿namespace HMData
 {
     partial class Auth
     {
@@ -127,7 +127,7 @@
             this.MinimumSize = new System.Drawing.Size(545, 488);
             this.Name = "Auth";
             this.Text = "Authentification";
-            this.Load += new System.EventHandler(this.Auth_Load);
+            //this.Load += new System.EventHandler(this.Auth_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 
-namespace WindowsFormsApp6
+namespace HMData
 {
     public partial class Auth : Form
     {
@@ -21,25 +21,23 @@ namespace WindowsFormsApp6
             InitializeComponent();
 
             //DB
-            
-            label3.Text = "Server : " + DatabaseManager.con.State.ToString();
+            Database_query.ConnectionDB();
+            label3.Text = "Server : " + Database_query.con.State.ToString();
             label3.ForeColor = Color.Green;
-            Console.WriteLine("Connection SQL Server established !", Console.ForegroundColor = ConsoleColor.Green);
-
+            login.Text = "admin";
+            password.Text = "admin";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Database_query.ConnectionDB();
             
-            
-
             string pass = null;
             string access = null;
 
-
             try
             {
-                MySqlCommand commandsql = new MySqlCommand("SELECT * FROM accounts WHERE Login = '" + login.Text + "'", DatabaseManager.con);
+                MySqlCommand commandsql = new MySqlCommand("SELECT * FROM accounts WHERE Login = '" + login.Text + "'", Database_query.con);
                 MySqlDataReader auth = commandsql.ExecuteReader();
 
                 while (auth.Read())
@@ -51,13 +49,11 @@ namespace WindowsFormsApp6
                     if (pass == password.Text & access == "1")
                     {
                         username = login.Text;
-                        DataRequest.accountsparam();
-                        //MessageBox.Show(DataRequest.nickname);
-                        //Auth.ActiveForm.Close();
-                        Console.WriteLine("User : " + nickname + " logged", Console.ForegroundColor = ConsoleColor.White);
-                        //Auth.ActiveForm.Hide();
-                        //Main f = new Main();
-                        //f.Show();
+                        Database_query.accountsparam();
+                        //MessageBox.Show("User : " + nickname + " logged - " + " Nickname : " + Database_query.nickname);
+                        Auth.ActiveForm.Hide();
+                        Main f = new Main();
+                        f.Show();
                         //Auth.ActiveForm.Hide();
                     }
                     else if (access != "1")
